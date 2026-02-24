@@ -1,0 +1,5 @@
+{
+  "name": "Skrill Clone",
+  "description": "A digital wallet and payment platform clone with balance management, money transfers, and transaction history.",
+  "requestFramePermissions": []
+}

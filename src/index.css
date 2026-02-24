@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-skrill-purple: #802b5c;
+  --color-skrill-dark: #1a1a1a;
+  --color-skrill-light: #f5f5f5;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-skrill-light text-skrill-dark font-sans;
+  }
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-skrill-purple text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-all active:scale-95;
+}
+
+.btn-secondary {
+  @apply bg-white text-skrill-purple border border-skrill-purple px-6 py-3 rounded-full font-semibold hover:bg-skrill-purple hover:text-white transition-all active:scale-95;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
