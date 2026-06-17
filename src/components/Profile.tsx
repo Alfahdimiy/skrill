@@ -9,9 +9,10 @@ import { UserProfile } from '../types';
 interface ProfileProps {
   user: UserProfile;
   onBack: () => void;
+  onHelpCenterClick: () => void;
 }
 
-export const Profile: React.FC<ProfileProps> = ({ user, onBack }) => {
+export const Profile: React.FC<ProfileProps> = ({ user, onBack, onHelpCenterClick }) => {
   const menuItems = [
     { label: 'Verification and features' },
     { label: 'Payment controls' },
@@ -30,7 +31,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, onBack }) => {
       active: false
     },
     { label: 'Personal details' },
-    { label: 'Help center' },
+    { label: 'Help center', action: onHelpCenterClick },
     { label: 'Privacy settings' },
     { label: 'Terms and Conditions' },
     { label: 'End User License Agreement' },
@@ -80,7 +81,7 @@ export const Profile: React.FC<ProfileProps> = ({ user, onBack }) => {
                 </div>
               </div>
             ) : (
-              <button className="w-full flex items-center justify-between text-left">
+              <button onClick={item.action} className="w-full flex items-center justify-between text-left">
                 <div className="flex items-center space-x-2">
                   <span className="text-xl font-bold text-gray-800">{item.label}</span>
                 </div>

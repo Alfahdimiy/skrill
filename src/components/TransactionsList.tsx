@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
+import { ArrowLeft, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { Transaction } from '../types';
 
 interface TransactionsListProps {
@@ -12,7 +12,7 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
   // Group transactions by year/today
   const groupedTransactions = transactions.reduce((groups: { [key: string]: Transaction[] }, tx) => {
     const year = tx.date.split(' ').pop() || '';
-    const groupKey = tx.date.includes('2026') ? 'Today' : year;
+    const groupKey = tx.date === 'Today' ? 'Today' : year;
     if (!groups[groupKey]) groups[groupKey] = [];
     groups[groupKey].push(tx);
     return groups;
@@ -43,16 +43,11 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
               {groupedTransactions[key].map((tx) => (
                 <div key={tx.id} className="flex items-center justify-between cursor-pointer active:bg-gray-50 transition-colors" onClick={() => onSelectTransaction(tx)}>
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 relative">
+                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 relative">
                       {tx.type === 'deposit' ? (
-                        <>
-                          <Download size={20} className="text-gray-400" />
-                          <div className="absolute bottom-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></div>
-                        </>
+                        <ArrowDownLeft size={24} />
                       ) : (
-                        <div className="border-2 border-gray-300 rounded-md p-0.5">
-                          <ArrowRight size={16} className="rotate-[-45deg]" />
-                        </div>
+                        <ArrowUpRight size={24} />
                       )}
                     </div>
                     <div>
@@ -63,8 +58,8 @@ export const TransactionsList: React.FC<TransactionsListProps> = ({ transactions
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`font-bold text-lg ${tx.type === 'deposit' ? 'text-green-600' : 'text-gray-500'}`}>
-                      USD {tx.type === 'deposit' ? '' : '-'}{Math.abs(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    <p className={`font-bold text-lg ${tx.type === 'deposit' ? 'text-green-600' : 'text-gray-900'}`}>
+                      {tx.currency} {tx.type === 'deposit' ? '' : '-'}{Math.abs(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </p>
                     <p className="text-sm text-gray-400">{tx.date}</p>
                   </div>

@@ -1,0 +1,20 @@
+{
+  "short_name": "Skrill",
+  "name": "Skrill",
+  "icons": [
+    {
+      "src": "https://i.ibb.co/C9x3w0M/skrill-logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://i.ibb.co/C9x3w0M/skrill-logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

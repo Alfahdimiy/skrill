@@ -13,17 +13,29 @@ import { TransactionsList } from './components/TransactionsList';
 import { TransactionDetails } from './components/TransactionDetails';
 import { SplashScreen } from './components/SplashScreen';
 import { LoginScreen } from './components/LoginScreen';
+import { HelpCenter } from './components/HelpCenter';
+import { MyCases } from './components/MyCases';
+import { CaseDetails } from './components/CaseDetails';
 import { UserProfile, Transaction } from './types';
 
 const INITIAL_USER: UserProfile = {
   name: 'Aliyu Isa Aliyu',
   email: 'aliyu.isa@example.com',
   customerId: '368947706',
-  balance: 1050.7,
+  balance: 1725.7,
   currency: 'USD',
 };
 
 const INITIAL_TRANSACTIONS: Transaction[] = [
+  {
+    id: '10',
+    type: 'deposit',
+    amount: 2500,
+    currency: 'SAR',
+    sender: 'Almustapha ghali',
+    date: 'Today',
+    status: 'completed',
+  },
   {
     id: '1',
     type: 'send',
@@ -121,8 +133,11 @@ export default function App() {
   const [showAllTransactions, setShowAllTransactions] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const [showProfile, setShowProfile] = useState(false);
-  const [user] = useState<UserProfile>(INITIAL_USER);
-  const [transactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
+  const [showHelpCenter, setShowHelpCenter] = useState(false);
+  const [showMyCases, setShowMyCases] = useState(false);
+  const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
+  const [user, setUser] = useState<UserProfile>(INITIAL_USER);
+  const [transactions, setTransactions] = useState<Transaction[]>(INITIAL_TRANSACTIONS);
 
   if (!isAppReady) {
     return <SplashScreen onFinish={() => setIsAppReady(true)} />;
@@ -133,8 +148,20 @@ export default function App() {
   }
 
   const renderContent = () => {
+    if (selectedCaseId) {
+      return <CaseDetails onBack={() => setSelectedCaseId(null)} />;
+    }
+
+    if (showMyCases) {
+      return <MyCases onBack={() => setShowMyCases(false)} onCaseClick={setSelectedCaseId} />;
+    }
+
+    if (showHelpCenter) {
+      return <HelpCenter onBack={() => setShowHelpCenter(false)} onMyCasesClick={() => setShowMyCases(true)} />;
+    }
+
     if (showProfile) {
-      return <Profile user={user} onBack={() => setShowProfile(false)} />;
+      return <Profile user={user} onBack={() => setShowProfile(false)} onHelpCenterClick={() => setShowHelpCenter(true)} />;
     }
 
     if (selectedTransaction) {
@@ -159,7 +186,7 @@ export default function App() {
       case 'crypto':
         return <Crypto />;
       case 'profile':
-        return <Profile user={user} />;
+        return <Profile user={user} onBack={() => {}} onHelpCenterClick={() => setShowHelpCenter(true)} />;
       case 'transfer':
         return (
           <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
@@ -185,7 +212,7 @@ export default function App() {
           </div>
         );
       default:
-        return <Dashboard user={user} transactions={transactions} />;
+        return <Dashboard user={user} transactions={transactions} onSeeAll={() => {}} onSelectTransaction={() => {}} onProfileClick={() => {}} />;
     }
   };
 
@@ -194,7 +221,7 @@ export default function App() {
       <main className="p-4 pt-6">
         <AnimatePresence mode="wait">
           <motion.div
-            key={showProfile ? 'profile' : selectedTransaction ? 'details' : showAllTransactions ? 'list' : activeTab}
+            key={selectedCaseId ? 'case-details' : showProfile ? 'profile' : selectedTransaction ? 'details' : showAllTransactions ? 'list' : showHelpCenter ? 'help' : showMyCases ? 'my-cases' : activeTab}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -204,7 +231,7 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
-      {(!showAllTransactions && !selectedTransaction && !showProfile) && <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />}
+      {(!showAllTransactions && !selectedTransaction && !showProfile && !showHelpCenter && !showMyCases && !selectedCaseId) && <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />}
     </div>
   );
 }

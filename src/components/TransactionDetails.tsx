@@ -59,11 +59,11 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = ({ transact
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-700 font-bold text-lg">You send:</span>
-              <span className="text-gray-700 font-bold text-lg">{transaction.currency} {transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              <span className="text-gray-700 font-bold text-lg">USD 4818.95</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-700 font-bold text-lg">They receive:</span>
-              <span className="text-gray-700 font-bold text-lg">{transaction.currency} {transaction.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+              <span className="text-gray-700 font-bold text-lg">SAR 19999</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-700 font-bold text-lg">Exchange rate:</span>
